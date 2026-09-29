@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduPath THPT - Định Hướng Ngành Học & Khối Thi Đại Học</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        pastel: {
+                            bg: '#F2F8F8',
+                            card: '#FFFFFF',
+                            primary: '#3B8296',
+                            primaryHover: '#2C6676',
+                            mint: '#A7E3D0',
+                            sage: '#8CD3AD',
+                            sky: '#C3E8E5',
+                            accent: '#F7A072',
+                            text: '#223843',
+                            textLight: '#657A84',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #F2F8F8;
+            background-image: 
+                radial-gradient(#BBE5E1 1.5px, transparent 1.5px), 
+                radial-gradient(#BBE5E1 1.5px, #F2F8F8 1.5px);
+            background-size: 40px 40px;
+            background-position: 0 0, 20px 20px;
+        }
+
+        .bg-pattern-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .floating-icon {
+            position: absolute;
+            color: rgba(59, 130, 150, 0.12);
+            animation: float 7s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-16px) rotate(6deg); }
+        }
+
+        .custom-shadow {
+            box-shadow: 0 12px 32px -6px rgba(59, 130, 150, 0.15);
+        }
+
+        .radio-card input:checked + div {
+            border-color: #3B8296;
+            background-color: #EBF6F6;
+            box-shadow: 0 4px 14px rgba(59, 130, 150, 0.15);
+        }
+
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white !important; }
+            .print-only { display: block !important; }
+        }
+    </style>
+</head>
+<body class="min-h-screen text-pastel-text relative flex flex-col justify-between">
+
+    <!-- Floating Study Background Icons -->
+    <div class="bg-pattern-shapes">
+        <i class="fa-solid fa-graduation-cap floating-icon text-6xl top-[8%] left-[4%]" style="animation-delay: 0s;"></i>
+        <i class="fa-solid fa-book-open floating-icon text-5xl top-[18%] right-[6%]" style="animation-delay: 1s;"></i>
+        <i class="fa-solid fa-compass floating-icon text-6xl bottom-[12%] left-[6%]" style="animation-delay: 2s;"></i>
+        <i class="fa-solid fa-microscope floating-icon text-5xl bottom-[20%] right-[5%]" style="animation-delay: 3s;"></i>
+        <i class="fa-solid fa-atom floating-icon text-6xl top-[48%] left-[2%]" style="animation-delay: 1.5s;"></i>
+        <i class="fa-solid fa-pen-ruler floating-icon text-5xl top-[62%] right-[3%]" style="animation-delay: 2.5s;"></i>
+        <i class="fa-solid fa-lightbulb floating-icon text-5xl top-[6%] left-[48%]" style="animation-delay: 0.5s;"></i>
+        <i class="fa-solid fa-calculator floating-icon text-5xl bottom-[40%] right-[8%]" style="animation-delay: 3.5s;"></i>
+    </div>
+
+    <!-- Header / Navbar -->
+    <header class="relative z-10 w-full max-w-5xl mx-auto px-4 py-6">
+        <div class="flex items-center justify-between bg-white/85 backdrop-blur-md px-6 py-4 rounded-2xl border border-white custom-shadow">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="goHome()">
+                <div class="w-10 h-10 rounded-xl bg-pastel-primary text-white flex items-center justify-center text-xl shadow-md">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg leading-tight text-pastel-text">EduPath THPT</h1>
+                    <p class="text-xs text-pastel-textLight font-medium">Hệ Thống Định Hướng Ngành Học & Khối Thi</p>
+                </div>
+            </div>
+            <div class="hidden sm:flex items-center space-x-2 text-xs font-semibold text-pastel-primary bg-pastel-sky/40 px-3 py-1.5 rounded-full border border-pastel-sky">
+                <i class="fa-solid fa-user-graduate"></i>
+                <span>Dành riêng cho Học sinh Lớp 10, 11 & 12</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="relative z-10 my-auto py-6 px-4 w-full max-w-4xl mx-auto">
+
+        <!-- VIEW 1: INTRO SCREEN -->
+        <div id="intro-screen" class="bg-white rounded-3xl p-6 md:p-10 border border-white custom-shadow text-center transition-all duration-300">
+            <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-pastel-sky/50 text-pastel-primary mb-6 text-3xl shadow-inner">
+                <i class="fa-solid fa-compass"></i>
+            </div>
+            <h2 class="text-2xl md:text-3xl font-extrabold text-pastel-text mb-4">
+                Khám Phá Bản Thân - Chọn Khối Thi & Ngành Học Phù Hợp
+            </h2>
+            <p class="text-pastel-textLight max-w-2xl mx-auto mb-8 leading-relaxed text-sm md:text-base">
+                Bạn băn khoăn giữa khối A00, A01, B00, C00 hay D01? Bạn chưa biết tính cách và năng lực môn học của mình phù hợp nhất với ngành nghề nào? Hãy trải nghiệm bộ trắc nghiệm 22 câu hỏi tương tác để tìm ra câu trả lời tối ưu!
+            </p>
+
+            <!-- Feature cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8 text-left max-w-3xl mx-auto">
+                <div class="p-4 rounded-2xl bg-pastel-bg border border-pastel-sky/60 flex items-start space-x-3">
+                    <i class="fa-solid fa-list-check text-pastel-primary text-xl mt-0.5"></i>
+                    <div>
+                        <h4 class="font-bold text-sm">22 Câu Hỏi Trắc Nghiệm</h4>
+                        <p class="text-xs text-pastel-textLight mt-0.5">Khảo sát toàn diện sở thích, môn học & tư duy.</p>
+                    </div>
+                </div>
+                <div class="p-4 rounded-2xl bg-pastel-bg border border-pastel-sky/60 flex items-start space-x-3">
+                    <i class="fa-solid fa-chart-pie text-pastel-primary text-xl mt-0.5"></i>
+                    <div>
+                        <h4 class="font-bold text-sm">Đề Xuất Khối Thi</h4>
+                        <p class="text-xs text-pastel-textLight mt-0.5">Phân tích tổ hợp môn thi Đại học phù hợp nhất.</p>
+                    </div>
+                </div>
+                <div class="p-4 rounded-2xl bg-pastel-bg border border-pastel-sky/60 flex items-start space-x-3">
+                    <i class="fa-solid fa-building-columns text-pastel-primary text-xl mt-0.5"></i>
+                    <div>
+                        <h4 class="font-bold text-sm">Top Trường Đại Học</h4>
+                        <p class="text-xs text-pastel-textLight mt-0.5">Gợi ý ngành hot và trường đào tạo uy tín tại Việt Nam.</p>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="startQuiz()" class="inline-flex items-center space-x-3 bg-pastel-primary hover:bg-pastel-primaryHover text-white font-bold py-4 px-10 rounded-2xl text-base shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200">
+                <span>Bắt Đầu Khảo Sát Ngay</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+            <p class="text-xs text-pastel-textLight mt-3 font-medium">
+                <i class="fa-regular fa-clock mr-1"></i>Thời gian ước tính: 8 - 10 phút
+            </p>
+        </div>
+
+        <!-- VIEW 2: QUIZ SCREEN -->
+        <div id="quiz-screen" class="hidden bg-white rounded-3xl p-6 md:p-10 border border-white custom-shadow transition-all duration-300">
+            <!-- Progress Bar -->
+            <div class="mb-8">
+                <div class="flex justify-between items-center mb-2">
+                    <span id="question-count" class="text-xs md:text-sm font-bold text-pastel-primary bg-pastel-sky/40 px-3 py-1 rounded-full">
+                        Câu hỏi 1 / 22
+                    </span>
+                    <span id="progress-percent" class="text-xs font-bold text-pastel-textLight">
+                        5%
+                    </span>
+                </div>
+                <div class="w-full bg-pastel-bg rounded-full h-3 p-0.5 border border-pastel-sky/50">
+                    <div id="progress-bar" class="bg-gradient-to-r from-pastel-primary to-pastel-sage h-full rounded-full transition-all duration-300" style="width: 5%"></div>
+                </div>
+            </div>
+
+            <!-- Question Box -->
+            <div class="mb-8">
+                <h3 id="question-text" class="text-lg md:text-xl font-bold text-pastel-text leading-snug mb-2">
+                    Nội dung câu hỏi...
+                </h3>
+                <p id="question-category" class="text-xs text-pastel-textLight italic">
+                    Chủ đề: Thế mạnh môn học
+                </p>
+            </div>
+
+            <!-- Options Container -->
+            <div id="options-container" class="space-y-3 mb-8">
+                <!-- Dynamic options injected by JS -->
+            </div>
+
+            <!-- Error message -->
+            <div id="quiz-error" class="hidden mb-4 p-3 bg-red-50 text-red-600 text-sm rounded-xl flex items-center space-x-2 border border-red-200">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <span>Vui lòng chọn một phương án trước khi chuyển sang câu tiếp theo!</span>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="flex justify-between items-center pt-4 border-t border-gray-100">
+                <button id="btn-prev" onclick="prevQuestion()" class="inline-flex items-center space-x-2 text-pastel-textLight hover:text-pastel-primary font-semibold px-4 py-2 rounded-xl hover:bg-pastel-bg transition-colors disabled:opacity-40 disabled:pointer-events-none">
+                    <i class="fa-solid fa-arrow-left text-sm"></i>
+                    <span>Quay lại</span>
+                </button>
+                <button id="btn-next" onclick="nextQuestion()" class="inline-flex items-center space-x-2 bg-pastel-primary hover:bg-pastel-primaryHover text-white font-bold px-6 py-3 rounded-xl shadow-md transition-all">
+                    <span>Tiếp theo</span>
+                    <i class="fa-solid fa-arrow-right text-sm"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- VIEW 3: RESULT SCREEN -->
+        <div id="result-screen" class="hidden space-y-6">
+            
+            <!-- Result Banner Header -->
+            <div class="bg-white rounded-3xl p-6 md:p-8 border border-white custom-shadow text-center">
+                <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-pastel-mint/40 text-pastel-primary text-2xl mb-4">
+                    <i class="fa-solid fa-award"></i>
+                </div>
+                <h2 class="text-2xl md:text-3xl font-extrabold text-pastel-text mb-2">
+                    Báo Cáo Định Hướng Ngành Học & Khối Thi
+                </h2>
+                <p class="text-pastel-textLight text-sm md:text-base max-w-xl mx-auto">
+                    Kết quả dưới đây được tổng hợp từ đặc điểm tư duy, thế mạnh môn học và sở thích cá nhân của bạn đối với hệ thống tuyển sinh Đại học tại Việt Nam.
+                </p>
+
+                <!-- Action Toolbar -->
+                <div class="no-print flex flex-wrap justify-center gap-3 mt-6">
+                    <button onclick="window.print()" class="inline-flex items-center space-x-2 bg-pastel-bg hover:bg-pastel-sky/50 text-pastel-text font-semibold px-4 py-2 rounded-xl text-sm border border-pastel-sky/60 transition-all">
+                        <i class="fa-solid fa-print"></i>
+                        <span>In / Lưu Báo Cáo (PDF)</span>
+                    </button>
+                    <button onclick="restartQuiz()" class="inline-flex items-center space-x-2 bg-pastel-primary text-white font-semibold px-4 py-2 rounded-xl text-sm hover:bg-pastel-primaryHover transition-all">
+                        <i class="fa-solid fa-rotate-right"></i>
+                        <span>Làm lại khảo sát</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Main Result Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                <!-- Left Column: Personality & Trait Breakdown -->
+                <div class="md:col-span-1 bg-white rounded-3xl p-6 border border-white custom-shadow space-y-6">
+                    <h3 class="font-bold text-lg text-pastel-text flex items-center space-x-2 border-b border-gray-100 pb-3">
+                        <i class="fa-solid fa-brain text-pastel-primary"></i>
+                        <span>Tính Cách & Năng Lực</span>
+                    </h3>
+                    
+                    <div id="primary-trait-card" class="p-4 rounded-2xl bg-pastel-bg border border-pastel-sky/50">
+                        <!-- Primary Trait Content Injected Here -->
+                    </div>
+
+                    <!-- Scores Breakdown -->
+                    <div>
+                        <h4 class="text-xs font-bold text-pastel-textLight uppercase tracking-wider mb-3">Tỷ lệ tương thích các nhóm</h4>
+                        <div id="scores-breakdown" class="space-y-3 text-xs font-medium">
+                            <!-- Dynamic Score Bars -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Specific Suggestions -->
+                <div class="md:col-span-2 space-y-6">
+                    
+                    <!-- Suggested Exam Blocks -->
+                    <div class="bg-white rounded-3xl p-6 border border-white custom-shadow">
+                        <h3 class="font-bold text-lg text-pastel-text flex items-center space-x-2 border-b border-gray-100 pb-3 mb-4">
+                            <i class="fa-solid fa-bookmark text-pastel-primary"></i>
+                            <span>Khối Thi Đại Học Đề Xuất Phù Hợp Nhất</span>
+                        </h3>
+                        <div id="suggested-blocks" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <!-- Block Cards Injected Here -->
+                        </div>
+                    </div>
+
+                    <!-- Suggested Majors -->
+                    <div class="bg-white rounded-3xl p-6 border border-white custom-shadow">
+                        <h3 class="font-bold text-lg text-pastel-text flex items-center space-x-2 border-b border-gray-100 pb-3 mb-4">
+                            <i class="fa-solid fa-briefcase text-pastel-primary"></i>
+                            <span>Ngành Học Đề Xuất & Phân Tích</span>
+                        </h3>
+                        <div id="suggested-majors" class="space-y-3">
+                            <!-- Major Cards Injected Here -->
+                        </div>
+                    </div>
+
+                    <!-- Suggested Universities in Vietnam -->
+                    <div class="bg-white rounded-3xl p-6 border border-white custom-shadow">
+                        <h3 class="font-bold text-lg text-pastel-text flex items-center space-x-2 border-b border-gray-100 pb-3 mb-4">
+                            <i class="fa-solid fa-building-columns text-pastel-primary"></i>
+                            <span>Trường Đại Học Đào Tạo Uy Tín Tại Việt Nam</span>
+                        </h3>
+                        <div id="suggested-unis" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <!-- University Items Injected Here -->
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Advice & Next Steps -->
+            <div class="bg-gradient-to-r from-pastel-primary to-pastel-primaryHover text-white rounded-3xl p-6 md:p-8 shadow-xl">
+                <div class="space-y-2">
+                    <h4 class="font-bold text-lg flex items-center space-x-2">
+                        <i class="fa-solid fa-lightbulb text-pastel-mint"></i>
+                        <span>Lời Khuyên & Lộ Trình Ôn Thi THPT</span>
+                    </h4>
+                    <p class="text-xs md:text-sm text-pastel-sky/90 leading-relaxed">
+                        1. <strong>Tập trung môn thế mạnh:</strong> Hãy dành thời gian ưu tiên ôn luyện 3 môn trọng tâm thuộc khối thi đề xuất ở trên.<br>
+                        2. <strong>Tham khảo điểm chuẩn 3 năm gần nhất:</strong> Tra cứu điểm chuẩn các ngành đề xuất tại các trường đại học target để đặt mục tiêu điểm số rõ ràng.<br>
+                        3. <strong>Đa dạng phương thức xét tuyển:</strong> Ngoài điểm thi tốt nghiệp THPT, hãy chuẩn bị cho xét học bạ, đánh giá năng lực (ĐGNL) hoặc chứng chỉ ngoại ngữ (IELTS/VSTEP).
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="relative z-10 w-full max-w-5xl mx-auto px-4 py-6 text-center text-xs text-pastel-textLight border-t border-gray-200/50 mt-8">
+        <p>© 2026 EduPath THPT - Nền tảng định hướng nghề nghiệp và tổ hợp môn thi dành cho học sinh Việt Nam.</p>
+    </footer>
+
+    <script>
+        // 22 Detailed Questions tailored for Vietnamese High School Students
+        // Traits: 
+        // INT: Tech/IT/Engineering (A00, A01)
+        // BIO: Medicine/Pharmacy/Life Sciences (B00, D07)
+        // SOC: Pedagogy/Social Sciences/Law/Languages (C00, D01, D14)
+        // BUS: Economics/Business/Marketing (A01, D01, A00)
+        // ART: Arts/Design/Media (H00, V00, D01)
+        // LOG: Data/Accounting/Finance (A00, A01, D07)
+
+        const questions = [
+            {
+                id: 1,
+                text: "Nhóm môn học nào khiến bạn cảm thấy tự tin và đạt kết quả cao nhất ở lớp?",
+                category: "Thế mạnh học tập",
+                options: [
+                    { text: "Toán, Vật lý, Tin học", traits: { INT: 3, LOG: 2 } },
+                    { text: "Hóa học, Sinh học, Toán", traits: { BIO: 3, LOG: 1 } },
+                    { text: "Ngữ văn, Lịch sử, Địa lý, GDCD", traits: { SOC: 3, ART: 1 } },
+                    { text: "Tiếng Anh / Ngoại ngữ, Môn năng khiếu (Vẽ, Nhạc)", traits: { ART: 3, BUS: 1 } }
+                ]
+            },
+            {
+                id: 2,
+                text: "Khi gặp một bài toán khó hoặc bài tập nâng cao, phản ứng đầu tiên của bạn là gì?",
+                category: "Phương pháp tư duy",
+                options: [
+                    { text: "Cố gắng tìm công thức, quy luật logic hoặc viết thuật toán để giải bằng được.", traits: { INT: 3, LOG: 3 } },
+                    { text: "Tra cứu hiện tượng thực tế, cơ chế sinh học hoặc phương trình hóa học tương ứng.", traits: { BIO: 3, LOG: 1 } },
+                    { text: "Dễ chán nản với con số, thích đọc sách phân tích tác phẩm hoặc sự kiện lịch sử hơn.", traits: { SOC: 3, ART: 1 } },
+                    { text: "Thảo luận với bạn bè, tìm nhiều hướng giải quyết và đưa ra phản biện.", traits: { BUS: 2, SOC: 2 } }
+                ]
+            },
+            {
+                id: 3,
+                text: "Trong công việc nhóm ở trường, vị trí nào bạn làm tốt và thích đảm nhận nhất?",
+                category: "Kỹ năng làm việc nhóm",
+                options: [
+                    { text: "Trưởng nhóm: Phân công công việc, quản lý tiến độ và thuyết trình.", traits: { BUS: 3, SOC: 1 } },
+                    { text: "Chuyên gia nội dung: Tra cứu số liệu, nghiên cứu thông tin chính xác.", traits: { LOG: 3, BIO: 1 } },
+                    { text: "Thiết kế slide PowerPoint, trang trí poster, hậu kỳ video báo cáo.", traits: { ART: 3 } },
+                    { text: "Xử lý kỹ thuật: Lập trình, tính toán bảng biểu Excel, chuẩn bị máy chiếu.", traits: { INT: 3 } }
+                ]
+            },
+            {
+                id: 4,
+                text: "Ngoài giờ học, hoạt động giải trí nào thu hút sự chú ý của bạn nhất?",
+                category: "Sở thích cá nhân",
+                options: [
+                    { text: "Vẽ tranh, thiết kế, nghe nhạc, chụp ảnh, viết lách sáng tạo.", traits: { ART: 3 } },
+                    { text: "Tháo lắp thiết bị điện tử, tìm hiểu ứng dụng phần mềm, chơi game chiến thuật.", traits: { INT: 3, LOG: 1 } },
+                    { text: "Đọc tin tức thị trường, theo dõi câu chuyện khởi nghiệp, kinh doanh.", traits: { BUS: 3 } },
+                    { text: "Tham gia câu lạc bộ thiện nguyện, trò chuyện, lắng nghe chia sẻ của mọi người.", traits: { SOC: 3 } }
+                ]
+            },
+            {
+                id: 5,
+                text: "Không gian làm việc trong tương lai mà bạn cảm thấy hào hứng nhất là gì?",
+                category: "Môi trường mơ ước",
+                options: [
+                    { text: "Văn phòng công nghệ hiện đại, tự do trang phục, tập trung vào mã nguồn & thiết bị.", traits: { INT: 3 } },
+                    { text: "Bệnh viện, phòng thí nghiệm y sinh sạch sẽ, chuẩn xác và chuyên nghiệp.", traits: { BIO: 3 } },
+                    { text: "Agency truyền thông, studio nghệ thuật đầy màu sắc và không gian mở sáng tạo.", traits: { ART: 3, BUS: 1 } },
+                    { text: "Tòa nhà tập đoàn lớn, ngân hàng, hoặc cơ quan chính phủ / trường học.", traits: { BUS: 2, SOC: 2 } }
+                ]
+            },
+            {
+                id: 6,
+                text: "Trình độ và thái độ của bạn đối với môn Tiếng Anh / Ngoại ngữ thế nào?",
+                category: "Năng lực ngoại ngữ",
+                options: [
+                    { text: "Yêu thích, giao tiếp phản xạ tự tin, thích đọc tài liệu & xem phim nước ngoài.", traits: { BUS: 2, SOC: 2, ART: 1 } },
+                    { text: "Học khá tốt từ vựng chuyên ngành, chủ yếu dùng để tra cứu tài liệu học tập.", traits: { INT: 2, LOG: 2 } },
+                    { text: "Học ở mức trung bình, tập trung ôn thi tốt nghiệp chứ không quá đam mê.", traits: { SOC: 1, BIO: 1 } },
+                    { text: "Rất giỏi và muốn sử dụng ngoại ngữ như một công cụ làm việc chính.", traits: { BUS: 3, SOC: 2 } }
+                ]
+            },
+            {
+                id: 7,
+                text: "Bạn cảm thấy có cảm hứng nhất khi làm việc trực tiếp với đối tượng nào?",
+                category: "Đối tượng làm việc",
+                options: [
+                    { text: "Con người: Giảng dạy, tư vấn tâm lý, chăm sóc sức khỏe, quản lý nhân sự.", traits: { SOC: 3 } },
+                    { text: "Dữ liệu & Con số: Bảng thống kê, báo cáo tài chính, mô hình toán.", traits: { LOG: 3, BUS: 1 } },
+                    { text: "Máy móc & Hệ thống: Phần mềm, vi mạch, máy tính, tự động hóa.", traits: { INT: 3 } },
+                    { text: "Ý tưởng & Thẩm mỹ: Sản phẩm nghệ thuật, video, hình ảnh, thiết kế kiến trúc.", traits: { ART: 3 } }
+                ]
+            },
+            {
+                id: 8,
+                text: "Khi theo dõi một phát minh công nghệ hay phát minh Y học mới trên báo chí, bạn nghĩ đến điều gì?",
+                category: "Góc nhìn xã hội",
+                options: [
+                    { text: "Tò mò về cấu trúc sinh học, vắc-xin hoặc tế bào y học đằng sau.", traits: { BIO: 3, LOG: 1 } },
+                    { text: "Quan tâm đến chi phí sản xuất, giá bán và khả năng thương mại hóa.", traits: { BUS: 3 } },
+                    { text: "Nghĩ về cách phát minh này giúp ích cho người nghèo và cộng đồng.", traits: { SOC: 3 } },
+                    { text: "Muốn biết ngôn ngữ lập trình hoặc công nghệ AI nào đã tạo ra nó.", traits: { INT: 3 } }
+                ]
+            },
+            {
+                id: 9,
+                text: "Đánh giá khả năng làm việc dưới áp lực thời gian (Deadline) của bạn:",
+                category: "Tâm lý & Áp lực",
+                options: [
+                    { text: "Thích sự cạnh tranh, áp lực cao thúc đẩy tôi ra kết quả vượt trội.", traits: { BUS: 3, INT: 1 } },
+                    { text: "Ưa thích sự ổn định, quy trình tỉ mỉ từng bước, không thích sự vội vàng.", traits: { LOG: 2, BIO: 2 } },
+                    { text: "Thích thời gian tự do linh hoạt, không gò bó trong khung giờ cố định.", traits: { ART: 3 } },
+                    { text: "Làm việc hiệu quả khi được làm cùng đồng đội và nhận được sự cổ vũ.", traits: { SOC: 3 } }
+                ]
+            },
+            {
+                id: 10,
+                text: "Cách bạn ghi chép bài học trên lớp thường trông như thế nào?",
+                category: "Thói quen học tập",
+                options: [
+                    { text: "Sơ đồ tư duy (Mindmap), vẽ trang trí sinh động, tô nhiều màu hightlight.", traits: { ART: 3 } },
+                    { text: "Gạch đầu dòng rõ ràng, mạch lạc, cẩn thận đóng khung các công thức cốt lõi.", traits: { LOG: 3, INT: 1 } },
+                    { text: "Ghi chép chi tiết từng lời cô giảng, chú thích phong phú đầy đủ.", traits: { SOC: 2, BIO: 2 } },
+                    { text: "Ghi ngắn gọn từ khóa chính, chỉ chú trọng vào ví dụ thực tế.", traits: { BUS: 2, INT: 2 } }
+                ]
+            },
+            {
+                id: 11,
+                text: "Đánh giá độ cẩn thận và tỉ mỉ của bạn đối với chi tiết nhỏ:",
+                category: "Độ chính xác",
+                options: [
+                    { text: "Cực kỳ chi tiết: Dễ dàng soi ra lỗi sai nhỏ trong bài toán hay dòng code.", traits: { LOG: 3, INT: 2 } },
+                    { text: "Rất cẩn thận khi quan sát thực vật, cơ thể người hoặc mẫu vật thí nghiệm.", traits: { BIO: 3 } },
+                    { text: "Cảm nhận nhanh nhạy về khoảng cách, màu sắc, bố cục và đường nét.", traits: { ART: 3 } },
+                    { text: "Chú trọng vào tổng thể và cảm xúc của con người hơn là chi tiết kỹ thuật.", traits: { SOC: 2, BUS: 2 } }
+                ]
+            },
+            {
+                id: 12,
+                text: "Nếu trường bạn mở các Câu lạc bộ sau, bạn sẽ đăng ký tham gia CLB nào?",
+                category: "Hoạt động trải nghiệm",
+                options: [
+                    { text: "CLB Lập trình / STEM & Khám phá khoa học.", traits: { INT: 3, LOG: 1 } },
+                    { text: "CLB Báo chí / Sách & Yêu môi trường.", traits: { SOC: 2, BIO: 1 } },
+                    { text: "CLB Mỹ thuật / Nhiếp ảnh / Âm nhạc.", traits: { ART: 3 } },
+                    { text: "CLB Doanh nhân trẻ / Debate (Tranh biện) / Sự kiện.", traits: { BUS: 3, SOC: 1 } }
+                ]
+            },
+            {
+                id: 13,
+                text: "Loại sách hoặc bài viết nào dễ khiến bạn đọc liên tục mà không thấy chán?",
+                category: "Hứng thú tri thức",
+                options: [
+                    { text: "Tiểu thuyết, tâm lý học, lịch sử thế giới, nghệ thuật đắc nhân tâm.", traits: { SOC: 3 } },
+                    { text: "Sách khám phá y học, cơ thể con người, thế giới động thực vật.", traits: { BIO: 3, LOG: 1 } },
+                    { text: "Sách bài học kinh doanh, tư duy làm giàu, chiến lược quản trị.", traits: { BUS: 3 } },
+                    { text: "Tài liệu kỹ thuật, hướng dẫn phần mềm, phát minh trí tuệ nhân tạo.", traits: { INT: 3 } }
+                ]
+            },
+            {
+                id: 14,
+                text: "Bạn quan tâm mức độ nào đến hoạt động quản lý tiền bạc & tài chính?",
+                category: "Tư duy Tài chính",
+                options: [
+                    { text: "Rất quan tâm: Thích tính toán khoản thu chi, tìm hiểu đầu tư & bán hàng.", traits: { BUS: 3 } },
+                    { text: "Chỉ quản lý đủ tiêu dùng cá nhân, thích tập trung vào kiến thức chuyên môn hơn.", traits: { INT: 1, BIO: 1, SOC: 1 } },
+                    { text: "Thích phân tích bảng số liệu, biểu đồ chứng khoán và mô hình toán kinh tế.", traits: { LOG: 3, BUS: 1 } },
+                    { text: "Không hứng thú với số tiền bạc, thích tự do sáng tạo nghệ thuật hơn.", traits: { ART: 2, SOC: 2 } }
+                ]
+            },
+            {
+                id: 15,
+                text: "Bạn thích làm kiểu bài kiểm tra nào nhất ở trường?",
+                category: "Loại hình kiểm tra",
+                options: [
+                    { text: "Trắc nghiệm Toán, Lý, Hóa với đáp án rõ ràng, chính xác.", traits: { INT: 2, LOG: 2 } },
+                    { text: "Bài viết tự luận Ngữ văn, Lịch sử đòi hỏi góc nhìn và cảm nhận cá nhân.", traits: { SOC: 3, ART: 1 } },
+                    { text: "Thực hành phòng thí nghiệm: Pha chế hóa chất, mổ xẻ quan sát mẫu Sinh học.", traits: { BIO: 3 } },
+                    { text: "Thuyết trình bài tập nhóm hoặc làm sản phẩm video, poster.", traits: { ART: 2, BUS: 2 } }
+                ]
+            },
+            {
+                id: 16,
+                text: "Khi nhìn thấy một chiếc ô tô điện mới ra mắt, yếu tố nào làm bạn quan tâm nhất?",
+                category: "Định hướng quan tâm",
+                options: [
+                    { text: "Dung lượng pin, động cơ điện, hệ thống tự lái và công nghệ phần mềm.", traits: { INT: 3 } },
+                    { text: "Kiểu dáng thiết kế ngoại thất, màu sơn và nội thất sang trọng.", traits: { ART: 3 } },
+                    { text: "Giá bán, doanh số thị trường và chiến lược truyền thông của hãng.", traits: { BUS: 3 } },
+                    { text: "Tác động của xe điện đến việc giảm ô nhiễm môi trường và sức khỏe con người.", traits: { SOC: 2, BIO: 1 } }
+                ]
+            },
+            {
+                id: 17,
+                text: "Đánh giá kỹ năng giao tiếp trước đám đông của bạn:",
+                category: "Giao tiếp xã hội",
+                options: [
+                    { text: "Tự tin, trôi chảy, dễ dàng thuyết phục và thu hút sự chú ý.", traits: { BUS: 3, SOC: 2 } },
+                    { text: "Lắng nghe tốt, thấu cảm, nói chuyện chân thành trong nhóm nhỏ.", traits: { SOC: 3 } },
+                    { text: "Ít nói, thích thể hiện qua hành động, viết lách hoặc sản phẩm cụ thể.", traits: { INT: 2, LOG: 2, ART: 1 } },
+                    { text: "Chỉ tự tin khi trình bày về chủ đề chuyên môn mà mình đã chuẩn bị kỹ.", traits: { BIO: 2, LOG: 2 } }
+                ]
+            },
+            {
+                id: 18,
+                text: "Mục tiêu quan trọng nhất đối với công việc tương lai của bạn là gì?",
+                category: "Giá trị bản thân",
+                options: [
+                    { text: "Thu nhập cao, cơ hội thăng tiến nhanh, giữ vị trí quản lý.", traits: { BUS: 3 } },
+                    { text: "Được tự do sáng tạo, để lại dấu ấn cá nhân trong sản phẩm.", traits: { ART: 3 } },
+                    { text: "Mang lại giá trị tích cực, cứu chữa hoặc giúp đỡ mọi người.", traits: { SOC: 3, BIO: 2 } },
+                    { text: "Làm chủ công nghệ tiên tiến, liên tục nâng cao trình độ chuyên môn.", traits: { INT: 3, LOG: 1 } }
+                ]
+            },
+            {
+                id: 19,
+                text: "Bạn có thích công việc có tính chất di chuyển nhiều và gặp gỡ đối tác không?",
+                category: "Sở thích vận động",
+                options: [
+                    { text: "Rất thích: Không chịu được việc ngồi yên một chỗ suốt 8 tiếng.", traits: { BUS: 3, SOC: 2 } },
+                    { text: "Thích làm việc ở không gian tập trung: Phòng thí nghiệm, máy tính, studio.", traits: { INT: 2, BIO: 2, ART: 2 } },
+                    { text: "Kết hợp linh hoạt: Vừa nghiên cứu chuyên môn vừa đi gặp khách hàng.", traits: { LOG: 2, BUS: 1 } },
+                    { text: "Muốn làm việc ở môi trường cố định: Trường học, bệnh viện, cơ quan.", traits: { SOC: 2, BIO: 2 } }
+                ]
+            },
+            {
+                id: 20,
+                text: "Khi chuẩn bị cho kỳ thi Đại học, bạn tập trung cao nhất cho chiến lược nào?",
+                category: "Chiến lược thi cử",
+                options: [
+                    { text: "Luyện giải đề Toán, Lý, Anh cấp tốc để đạt điểm tối đa trắc nghiệm.", traits: { INT: 2, BUS: 1 } },
+                    { text: "Học chắc lý thuyết Hóa - Sinh để nắm trọn điểm lý thuyết phòng Lab.", traits: { BIO: 3 } },
+                    { text: "Rèn kỹ năng viết luận Văn học, học thuộc mốc sự kiện Lịch sử.", traits: { SOC: 3 } },
+                    { text: "Ôn thi song song kiến thức văn hóa và luyện thi môn năng khiếu Vẽ.", traits: { ART: 3 } }
+                ]
+            },
+            {
+                id: 21,
+                text: "Phương châm học tập nào phản ánh đúng nhất con người bạn?",
+                category: "Triết lý sống",
+                options: [
+                    { text: "\"Công nghệ & Kỹ thuật là chìa khóa thay đổi tương lai.\"", traits: { INT: 3 } },
+                    { text: "\"Y đức & Tri thức - Tất cả vì sức khỏe và sự sống con người.\"", traits: { BIO: 3, SOC: 1 } },
+                    { text: "\"Sáng tạo không giới hạn - Thẩm mỹ làm đẹp cho đời.\"", traits: { ART: 3 } },
+                    { text: "\"Lãnh đạo & Kết nối - Tạo ra giá trị kinh tế xã hội.\"", traits: { BUS: 2, SOC: 3 } }
+                ]
+            },
+            {
+                id: 22,
+                text: "Nếu được chọn một đề tài nghiên cứu niên luận tốt nghiệp, bạn chọn chủ đề nào?",
+                category: "Định hướng chuyên sâu",
+                options: [
+                    { text: "Xây dựng ứng dụng di động thông minh tích hợp trí tuệ nhân tạo (AI).", traits: { INT: 3 } },
+                    { text: "Phân tích tác dụng dược lý của thảo dược thiên nhiên trong điều trị bệnh.", traits: { BIO: 3 } },
+                    { text: "Khảo sát hành vi tiêu dùng Gen Z trên nền tảng thương mại điện tử.", traits: { BUS: 3 } },
+                    { text: "Tác động của mạng xã hội đến tâm lý học đường của giới trẻ.", traits: { SOC: 3 } }
+                ]
+            }
+        ];
+
+        // Result Content Database for Vietnam College Admissions
+        const traitProfiles = {
+            INT: {
+                name: "Công Nghệ & Kỹ Thuật (Engineering & Technology)",
+                icon: "fa-solid fa-code",
+                desc: "Bạn có tư duy logic sắc bén, yêu thích máy tính, công nghệ và các nguyên lý kỹ thuật. Bạn phù hợp với ngành xây dựng hệ thống phần mềm, tự động hóa và phát triển công nghệ mới.",
+                blocks: [
+                    { code: "A00", subjects: "Toán, Vật lý, Hóa học" },
+                    { code: "A01", subjects: "Toán, Vật lý, Tiếng Anh" },
+                    { code: "D07", subjects: "Toán, Hóa học, Tiếng Anh" }
+                ],
+                majors: [
+                    { name: "Công nghệ thông tin / Kỹ thuật phần mềm", why: "Thích hợp với tư duy lập trình, xây dựng ứng dụng & thuật toán." },
+                    { name: "Trí tuệ nhân tạo (AI) & Khoa học dữ liệu", why: "Đón đầu xu hướng công nghệ hiện đại, đòi hỏi tư duy Toán - Tin cao." },
+                    { name: "Kỹ thuật Cơ điện tử / Ô tô / Điện tử viễn thông", why: "Ứng dụng kỹ thuật vào sản xuất cứng và tự động hóa công nghiệp." },
+                    { name: "An toàn thông tin / Khoa học máy tính", why: "Cần sự tỉ mỉ, bảo mật hệ thống và giải quyết sự cố mạng." }
+                ],
+                unis: [
+                    "ĐH Bách Khoa Hà Nội / ĐH Bách Khoa TP.HCM",
+                    "ĐH Công nghệ - ĐHQGHN",
+                    "ĐH CNTT - ĐHQG TP.HCM (UIT)",
+                    "ĐH Sư phạm Kỹ thuật TP.HCM",
+                    "Học viện Công nghệ Bưu chính Viễn thông (PTIT)",
+                    "ĐH FPT"
+                ]
+            },
+            BIO: {
+                name: "Y Dược & Khoa Học Sức Khỏe (Health & Biological Sciences)",
+                icon: "fa-solid fa-user-doctor",
+                desc: "Bạn có tinh thần cẩn trọng, kiên trì, quan tâm sâu sắc tới sự sống, con người và môi trường tự nhiên. Bạn phù hợp với khối ngành nghiên cứu y sinh và chăm sóc sức khỏe.",
+                blocks: [
+                    { code: "B00", subjects: "Toán, Hóa học, Sinh học" },
+                    { code: "A00", subjects: "Toán, Vật lý, Hóa học" },
+                    { code: "D07", subjects: "Toán, Hóa học, Tiếng Anh" }
+                ],
+                majors: [
+                    { name: "Y đa khoa / Răng - Hàm - Mặt / Dược học", why: "Khối ngành cao quý đòi hỏi sự tỉ mỉ, kiên trì và kiến thức Sinh-Hóa vững vàng." },
+                    { name: "Công nghệ Sinh học / Công nghệ Thực phẩm", why: "Nghiên cứu vi sinh, ứng dụng sinh học vào đời sống và nông nghiệp công nghệ cao." },
+                    { name: "Kỹ thuật Xét nghiệm Y học / Điều dưỡng", why: "Làm việc trong môi trường y tế chuẩn xác, hỗ trợ điều trị bệnh nhân." },
+                    { name: "Hóa dược / Y tế công cộng", why: "Kết hợp giữa nghiên cứu dược phẩm và quản lý sức khỏe cộng đồng." }
+                ],
+                unis: [
+                    "ĐH Y Hà Nội / ĐH Y Dược TP.HCM",
+                    "ĐH Dược Hà Nội",
+                    "ĐH Y Khoa Phạm Ngọc Thạch",
+                    "ĐH Khoa học Tự nhiên (ĐHQGHN / ĐHQG TP.HCM)",
+                    "Học viện Quân Y",
+                    "ĐH Y Dược Cần Thơ"
+                ]
+            },
+            SOC: {
+                name: "Xã Hội, Sư Phạm & Nhân Văn (Social Sciences & Humanities)",
+                icon: "fa-solid fa-people-hold",
+                desc: "Bạn thấu hiểu con người, giao tiếp khéo léo, thích đóng góp cho cộng đồng và có thế mạnh về ngôn ngữ, văn hóa, xã hội.",
+                blocks: [
+                    { code: "C00", subjects: "Ngữ văn, Lịch sử, Địa lý" },
+                    { code: "D01", subjects: "Toán, Ngữ văn, Tiếng Anh" },
+                    { code: "D14", subjects: "Ngữ văn, Lịch sử, Tiếng Anh" }
+                ],
+                majors: [
+                    { name: "Sư phạm (Toán/Văn/Anh/Tiểu học)", why: "Phát huy khả năng truyền đạt, sự kiên nhẫn và đam mê đào tạo thế hệ trẻ." },
+                    { name: "Tâm lý học / Báo chí & Truyền thông", why: "Thấu hiểu hành vi con người, nhạy bén với thông tin xã hội." },
+                    { name: "Luật học / Quan hệ Quốc tế", why: "Tư duy pháp lý, đàm phán ngoại giao và bảo vệ công lý." },
+                    { name: "Ngôn ngữ Anh / Hàn / Nhật / Trung", why: "Làm chủ ngoại ngữ, mở rộng cơ hội làm việc tại doanh nghiệp đa quốc gia." }
+                ],
+                unis: [
+                    "ĐH Sư phạm Hà Nội / ĐH Sư phạm TP.HCM",
+                    "ĐH KHXH&NV (ĐHQGHN / ĐHQG TP.HCM)",
+                    "Học viện Báo chí và Tuyên truyền",
+                    "ĐH Luật Hà Nội / ĐH Luật TP.HCM",
+                    "Học viện Ngoại giao"
+                ]
+            },
+            BUS: {
+                name: "Kinh Tế, Quản Trị & Kinh Doanh (Business & Management)",
+                icon: "fa-solid fa-chart-line",
+                desc: "Bạn năng động, nhạy bén với cơ hội thị trường, có tố chất lãnh đạo và thích làm việc trong môi trường doanh nghiệp cạnh tranh.",
+                blocks: [
+                    { code: "A01", subjects: "Toán, Vật lý, Tiếng Anh" },
+                    { code: "D01", subjects: "Toán, Ngữ văn, Tiếng Anh" },
+                    { code: "A00", subjects: "Toán, Vật lý, Hóa học" }
+                ],
+                majors: [
+                    { name: "Quản trị kinh doanh / Marketing", why: "Năng động, nhạy bén thị trường, xây dựng chiến lược truyền thông sản phẩm." },
+                    { name: "Tài chính - Ngân hàng / Đầu tư", why: "Phù hợp với tư duy con số tài chính, quản lý dòng tiền và vốn." },
+                    { name: "Kinh doanh quốc tế / Logistics & Chuỗi cung ứng", why: "Làm việc môi trường toàn cầu, đàm phán thương mại và xuất nhập khẩu." },
+                    { name: "Quản trị Khách sạn & Du lịch", why: "Giao tiếp chuyên nghiệp, điều hành dịch vụ lưu trú cao cấp." }
+                ],
+                unis: [
+                    "ĐH Kinh tế Quốc dân (NEU)",
+                    "ĐH Ngoại thương (FTU)",
+                    "ĐH Kinh tế TP.HCM (UEH)",
+                    "Học viện Tài chính / Học viện Ngân hàng",
+                    "ĐH Thương mại",
+                    "ĐH Kinh tế - ĐHQGHN"
+                ]
+            },
+            ART: {
+                name: "Nghệ Thuật, Thiết Kế & Sáng Tạo (Arts & Design)",
+                icon: "fa-solid fa-palette",
+                desc: "Bạn sở hữu trí tưởng tượng phong phú, gu thẩm mỹ cao, thích thể hiện cá tính qua các sản phẩm trực quan, màu sắc và hình khối.",
+                blocks: [
+                    { code: "H00", subjects: "Ngữ văn, Năng khiếu Vẽ 1, Năng khiếu Vẽ 2" },
+                    { code: "V00", subjects: "Toán, Vật lý, Vẽ Mỹ thuật" },
+                    { code: "D01", subjects: "Toán, Ngữ văn, Tiếng Anh" }
+                ],
+                majors: [
+                    { name: "Thiết kế Đồ họa (Graphic Design) / Multimedia", why: "Sáng tạo ấn phẩm truyền thông, giao diện số và thương hiệu." },
+                    { name: "Kiến trúc / Thiết kế Nội thất", why: "Kết hợp mỹ thuật ứng dụng với kỹ thuật xây dựng không gian sống." },
+                    { name: "Thiết kế Thời trang / Truyền thông Đa phương tiện", why: "Nắm bắt xu hướng thẩm mỹ, sản xuất nội dung video & nghệ thuật." },
+                    { name: "Đạo diễn / Điện ảnh & Sân khấu", why: "Kể chuyện bằng hình ảnh, ánh sáng và tư duy nghệ thuật." }
+                ],
+                unis: [
+                    "ĐH Kiến trúc Hà Nội / ĐH Kiến trúc TP.HCM",
+                    "ĐH Mỹ thuật Công nghiệp / ĐH Mỹ thuật TP.HCM",
+                    "ĐH Sân khấu - Điện ảnh",
+                    "ĐH Tôn Đức Thắng",
+                    "ĐH Văn Lang"
+                ]
+            },
+            LOG: {
+                name: "Phân Tích Dữ Liệu & Kiểm Toán (Analytical & Finance)",
+                icon: "fa-solid fa-calculator",
+                desc: "Bạn cẩn thận, nguyên tắc, thích làm việc với các con số, dữ liệu chuẩn xác và có khả năng phân tích hệ thống logic.",
+                blocks: [
+                    { code: "A00", subjects: "Toán, Vật lý, Hóa học" },
+                    { code: "A01", subjects: "Toán, Vật lý, Tiếng Anh" },
+                    { code: "D07", subjects: "Toán, Hóa học, Tiếng Anh" }
+                ],
+                majors: [
+                    { name: "Kế toán / Kiểm toán", why: "Đòi hỏi sự tỉ mỉ, chính xác tuyệt đối và tuân thủ quy chuẩn tài chính." },
+                    { name: "Khoa học Dữ liệu (Data Science) / Thống kê", why: "Phân tích dữ liệu lớn để tìm quy luật hỗ trợ ra quyết định kinh doanh." },
+                    { name: "Toán ứng dụng / Kinh tế lượng", why: "Áp dụng mô hình toán học giải quyết bài toán thực tế." },
+                    { name: "Hệ thống thông tin quản lý (MIS)", why: "Cầu nối giữa công nghệ thông tin và quản trị dữ liệu doanh nghiệp." }
+                ],
+                unis: [
+                    "ĐH Kinh tế Quốc dân",
+                    "ĐH Ngoại thương",
+                    "ĐH Khoa học Tự nhiên",
+                    "Học viện Tài chính",
+                    "ĐH Bách Khoa"
+                ]
+            }
+        };
+
+        // State Management
+        let currentQuestionIndex = 0;
+        let userAnswers = {}; // { questionId: optionIndex }
+        let traitScores = { INT: 0, BIO: 0, SOC: 0, BUS: 0, ART: 0, LOG: 0 };
+
+        // Functions
+        function showScreen(screenId) {
+            document.getElementById('intro-screen').classList.add('hidden');
+            document.getElementById('quiz-screen').classList.add('hidden');
+            document.getElementById('result-screen').classList.add('hidden');
+
+            document.getElementById(screenId).classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function goHome() {
+            showScreen('intro-screen');
+        }
+
+        function startQuiz() {
+            currentQuestionIndex = 0;
+            userAnswers = {};
+            resetScores();
+            renderQuestion();
+            showScreen('quiz-screen');
+        }
+
+        function resetScores() {
+            traitScores = { INT: 0, BIO: 0, SOC: 0, BUS: 0, ART: 0, LOG: 0 };
+        }
+
+        function renderQuestion() {
+            const q = questions[currentQuestionIndex];
+            
+            document.getElementById('quiz-error').classList.add('hidden');
+
+            // Render Header & Progress
+            document.getElementById('question-count').innerText = `Câu hỏi ${currentQuestionIndex + 1} / ${questions.length}`;
+            const percent = Math.round(((currentQuestionIndex + 1) / questions.length) * 100);
+            document.getElementById('progress-percent').innerText = `${percent}%`;
+            document.getElementById('progress-bar').style.width = `${percent}%`;
+
+            // Question Text & Category
+            document.getElementById('question-text').innerText = q.text;
+            document.getElementById('question-category').innerText = `Chủ đề: ${q.category}`;
+
+            // Options
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+
+            const selectedOption = userAnswers[q.id];
+
+            q.options.forEach((opt, idx) => {
+                const label = document.createElement('label');
+                label.className = "radio-card cursor-pointer block";
+                
+                const isChecked = selectedOption === idx ? 'checked' : '';
+                
+                label.innerHTML = `
+                    <input type="radio" name="q_${q.id}" value="${idx}" class="hidden" ${isChecked} onchange="selectOption(${q.id}, ${idx})">
+                    <div class="p-4 rounded-2xl border border-pastel-sky/60 bg-pastel-bg/50 hover:bg-pastel-sky/20 transition-all flex items-start space-x-3">
+                        <div class="w-5 h-5 rounded-full border-2 border-pastel-primary/50 flex items-center justify-center mt-0.5 flex-shrink-0 bg-white">
+                            <div class="w-2.5 h-2.5 rounded-full bg-pastel-primary ${isChecked ? 'block' : 'hidden'}"></div>
+                        </div>
+                        <span class="text-sm font-medium text-pastel-text leading-relaxed">${opt.text}</span>
+                    </div>
+                `;
+                container.appendChild(label);
+            });
+
+            // Update Prev Button
+            const prevBtn = document.getElementById('btn-prev');
+            prevBtn.disabled = currentQuestionIndex === 0;
+
+            // Update Next Button
+            const nextBtnSpan = document.querySelector('#btn-next span');
+            if (currentQuestionIndex === questions.length - 1) {
+                nextBtnSpan.innerText = "Xem Kết Quả";
+            } else {
+                nextBtnSpan.innerText = "Tiếp theo";
+            }
+        }
+
+        function selectOption(qId, optIdx) {
+            userAnswers[qId] = optIdx;
+            document.getElementById('quiz-error').classList.add('hidden');
+            
+            const radios = document.querySelectorAll(`input[name="q_${qId}"]`);
+            radios.forEach((r, idx) => {
+                const dot = r.nextElementSibling.querySelector('div div');
+                if (idx === optIdx) {
+                    dot.classList.remove('hidden');
+                } else {
+                    dot.classList.add('hidden');
+                }
+            });
+        }
+
+        function nextQuestion() {
+            const currentQ = questions[currentQuestionIndex];
+            if (userAnswers[currentQ.id] === undefined) {
+                document.getElementById('quiz-error').classList.remove('hidden');
+                return;
+            }
+
+            if (currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+                renderQuestion();
+            } else {
+                calculateAndShowResults();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                renderQuestion();
+            }
+        }
+
+        function calculateAndShowResults() {
+            resetScores();
+
+            // Calculate total scores
+            questions.forEach(q => {
+                const selectedOptIdx = userAnswers[q.id];
+                if (selectedOptIdx !== undefined) {
+                    const traits = q.options[selectedOptIdx].traits;
+                    for (let t in traits) {
+                        if (traitScores[t] !== undefined) {
+                            traitScores[t] += traits[t];
+                        }
+                    }
+                }
+            });
+
+            // Find highest trait
+            let topTrait = 'INT';
+            let maxScore = -1;
+            let totalScore = 0;
+
+            for (let t in traitScores) {
+                totalScore += traitScores[t];
+                if (traitScores[t] > maxScore) {
+                    maxScore = traitScores[t];
+                    topTrait = t;
+                }
+            }
+
+            const profile = traitProfiles[topTrait];
+
+            // Primary Card
+            const primaryCard = document.getElementById('primary-trait-card');
+            primaryCard.innerHTML = `
+                <div class="flex items-center space-x-3 mb-2">
+                    <div class="w-10 h-10 rounded-xl bg-pastel-primary text-white flex items-center justify-center text-lg">
+                        <i class="${profile.icon}"></i>
+                    </div>
+                    <div>
+                        <span class="text-[10px] uppercase font-bold tracking-wider text-pastel-primary">Nhóm Nổi Trội Nhất</span>
+                        <h4 class="font-extrabold text-base text-pastel-text leading-tight">${profile.name}</h4>
+                    </div>
+                </div>
+                <p class="text-xs text-pastel-textLight leading-relaxed mt-2">${profile.desc}</p>
+            `;
+
+            // Score breakdown bars
+            const scoresContainer = document.getElementById('scores-breakdown');
+            scoresContainer.innerHTML = '';
+
+            const sortedTraits = Object.keys(traitScores).sort((a, b) => traitScores[b] - traitScores[a]);
+
+            sortedTraits.forEach(tKey => {
+                const score = traitScores[tKey];
+                const pct = totalScore > 0 ? Math.round((score / totalScore) * 100) : 0;
+                const pInfo = traitProfiles[tKey];
+
+                const item = document.createElement('div');
+                item.className = "space-y-1";
+                item.innerHTML = `
+                    <div class="flex justify-between text-xs">
+                        <span class="font-semibold text-pastel-text truncate max-w-[180px]">${pInfo.name.split(' (')[0]}</span>
+                        <span class="text-pastel-primary font-bold">${pct}%</span>
+                    </div>
+                    <div class="w-full bg-pastel-sky/30 rounded-full h-2 overflow-hidden">
+                        <div class="bg-pastel-primary h-full rounded-full" style="width: ${pct}%"></div>
+                    </div>
+                `;
+                scoresContainer.appendChild(item);
+            });
+
+            // Blocks
+            const blocksContainer = document.getElementById('suggested-blocks');
+            blocksContainer.innerHTML = '';
+            profile.blocks.forEach(b => {
+                const blockDiv = document.createElement('div');
+                blockDiv.className = "p-4 rounded-2xl bg-pastel-bg border border-pastel-sky/60 flex items-start space-x-3";
+                blockDiv.innerHTML = `
+                    <div class="w-10 h-10 rounded-xl bg-white text-pastel-primary font-extrabold flex items-center justify-center text-base shadow-sm border border-pastel-sky/40 flex-shrink-0">
+                        ${b.code}
+                    </div>
+                    <div>
+                        <h5 class="font-bold text-sm text-pastel-text">Khối ${b.code}</h5>
+                        <p class="text-xs text-pastel-textLight mt-0.5">Tổ hợp môn: ${b.subjects}</p>
+                    </div>
+                `;
+                blocksContainer.appendChild(blockDiv);
+            });
+
+            // Majors
+            const majorsContainer = document.getElementById('suggested-majors');
+            majorsContainer.innerHTML = '';
+            profile.majors.forEach(m => {
+                const majorDiv = document.createElement('div');
+                majorDiv.className = "p-4 rounded-2xl bg-pastel-bg/60 border border-pastel-sky/40 space-y-1";
+                majorDiv.innerHTML = `
+                    <h5 class="font-bold text-sm text-pastel-text flex items-center space-x-2">
+                        <i class="fa-solid fa-circle-check text-pastel-primary text-xs"></i>
+                        <span>${m.name}</span>
+                    </h5>
+                    <p class="text-xs text-pastel-textLight pl-5 leading-relaxed">${m.why}</p>
+                `;
+                majorsContainer.appendChild(majorDiv);
+            });
+
+            // Universities
+            const unisContainer = document.getElementById('suggested-unis');
+            unisContainer.innerHTML = '';
+            profile.unis.forEach(u => {
+                const uniDiv = document.createElement('div');
+                uniDiv.className = "p-3 rounded-xl bg-pastel-bg/40 border border-pastel-sky/30 text-xs font-medium text-pastel-text flex items-center space-x-2";
+                uniDiv.innerHTML = `
+                    <i class="fa-solid fa-building-columns text-pastel-primary"></i>
+                    <span>${u}</span>
+                `;
+                unisContainer.appendChild(uniDiv);
+            });
+
+            showScreen('result-screen');
+        }
+
+        function restartQuiz() {
+            startQuiz();
+        }
+
+        // Initialize on load
+        window.onload = function() {
+            showScreen('intro-screen');
+        };
+    </script>
+</body>
+</html>
